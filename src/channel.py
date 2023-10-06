@@ -70,3 +70,7 @@ class Channel:
         filepath = os.path.join(root_dir, 'homework-2', filename)
         with open(file=filepath, encoding="utf-8", mode='w') as file:
             json.dump(self.channel, file)
+
+    @property
+    def channel_id(self):
+        return self.channel_id
