@@ -11,7 +11,7 @@ class Channel:
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.channel_id = channel_id
+        self.__id = channel_id
         if Channel.youtube is None:
             Channel.youtube = build('youtube', 'v3', developerKey=Channel.__api_key())
         self.channel = Channel.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
@@ -73,4 +73,39 @@ class Channel:
 
     @property
     def channel_id(self):
-        return self.channel_id
+        ''' Геттер на channel id '''
+        return self.__id
+
+    def __str__(self):
+        '''
+        Представление для пользователей
+        '''
+        return f"'{self.title}, ({self.url})'"
+
+    def __add__(self, other):
+        ''' Метод + '''
+        return int(self.subscriber) + int(other.subscriber)
+
+    def __sub__(self, other):
+        ''' Метод - '''
+        return int(self.subscriber) - int(other.subscriber)
+
+    def __gt__(self, other):
+        ''' Метод > '''
+        return int(self.subscriber) > int(other.subscriber)
+
+    def __ge__(self, other):
+        ''' Метод >= '''
+        return int(self.subscriber) >= int(other.subscriber)
+
+    def __lt__(self, other):
+        ''' Метод < '''
+        return int(self.subscriber) < int(other.subscriber)
+
+    def __le__(self, other):
+        ''' Метод <= '''
+        return int(self.subscriber) <= int(other.subscriber)
+
+    def __eq__(self, other):
+        ''' Метод == '''
+        return int(self.subscriber) == int(other.subscriber)
