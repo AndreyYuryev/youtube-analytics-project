@@ -2,9 +2,11 @@ from src.api import Youtube
 
 
 class Video:
+    ''' Объект видео '''
     youtube = None
 
     def __init__(self, id_video):
+        ''' создать объект по id '''
         if Video.youtube is None:
             Video.youtube = Youtube().youtube
         self.id_video = id_video
@@ -18,11 +20,14 @@ class Video:
         self.comments = video_response['items'][0]['statistics']['commentCount']
 
     def __str__(self):
+        ''' Название видео '''
         return self.title
 
 
 class PLVideo(Video):
+    ''' Объект видео из плейлиста'''
     def __init__(self, id_video, id_pl):
+        ''' получить плейлист и создать из него объект видео по id '''
         if Video.youtube is None:
             Video.youtube = Youtube().youtube
         self.id_pl = id_pl
