@@ -3,6 +3,7 @@ import os
 from googleapiclient.discovery import build
 import isodate
 from dotenv import load_dotenv
+from src.api import Youtube
 
 
 class Channel:
@@ -13,24 +14,10 @@ class Channel:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.__id = channel_id
         if Channel.youtube is None:
-            Channel.youtube = build('youtube', 'v3', developerKey=Channel.__api_key())
+            Channel.youtube = Youtube().youtube
         self.channel = Channel.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
         (self.title, self.video_count, self.url, self.description,
          self.subscriber, self.view_count) = self.__get_cnannel_info()
-
-    @staticmethod
-    def __api_key():
-        '''
-        Считать API_KEY из переменных окружения
-        '''
-        api_key = ''
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        root_dir = os.path.split(current_dir)[0]
-        filepath = os.path.join(root_dir, '.env')
-        if os.path.exists(filepath):
-            load_dotenv(filepath)
-            api_key = os.getenv('API_KEY')
-        return api_key
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
