@@ -4,6 +4,7 @@ from googleapiclient.discovery import build
 
 
 class Api:
+    ''' Работа с API_KEY '''
     def __init__(self):
         self.__api_key = Api.__get_api_key()
 
@@ -23,13 +24,16 @@ class Api:
 
     @property
     def api_key(self):
+        ''' Геттер '''
         return self.__api_key
 
 
 class Youtube:
+    ''' Работа с api youtube '''
     def __init__(self):
         self.__service = build('youtube', 'v3', developerKey=Api().api_key)
 
     @property
     def youtube(self):
+        ''' геттер '''
         return self.__service
